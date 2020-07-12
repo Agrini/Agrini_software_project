@@ -3,26 +3,38 @@ package com.example.Word.Entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="word")
 public class Word {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int wid;
     @Id
     private String word;
-    @ManyToMany(fetch=FetchType.LAZY, cascade =CascadeType.ALL,mappedBy ="synonyms")
-    @JoinTable(name="word_synonyms", joinColumns = {@JoinColumn(name="word")}, inverseJoinColumns = {@JoinColumn(name="synonym")})
-    private List<Word> synonyms;
 
-    public int getWid() {
-        return wid;
+    @ManyToMany
+    @JoinTable(
+            name = "ws_table",
+            joinColumns = @JoinColumn(name = "word"),
+            inverseJoinColumns = @JoinColumn(name = "synonym"))
+    private Set<Word> hasSynonyms;
+//    @ManyToMany(fetch=FetchType.LAZY, cascade =CascadeType.ALL,mappedBy ="synonyms")
+//    private Set<Word> synonyms;
+
+    public Set<Word> getHasSynonyms() {
+        return hasSynonyms;
     }
 
-    public void setWid(int wid) {
-        this.wid = wid;
+    public void setHasSynonyms(Set<Word> hasSynonyms) {
+        this.hasSynonyms = hasSynonyms;
     }
+//    public int getWid() {
+//        return wid;
+//    }
+//
+//    public void setWid(int wid) {
+//        this.wid = wid;
+//    }
 
     public String getWord() {
         return word;
@@ -32,13 +44,13 @@ public class Word {
         this.word = word;
     }
 
-    public List<Word> getSynonyms() {
-        return synonyms;
-    }
-
-    public void setSynonyms(List<Word> synonyms) {
-        this.synonyms = synonyms;
-    }
+//    public Set<Word> getSynonyms() {
+//        return synonyms;
+//    }
+//
+//    public void setSynonyms(Set<Word> synonyms) {
+//        this.synonyms = synonyms;
+//    }
 
     public Word() {
     }
@@ -46,9 +58,8 @@ public class Word {
     @Override
     public String toString() {
         return "Word{" +
-                "wid=" + wid +
-                ", word='" + word + '\'' +
-                ", synonyms=" + synonyms +
+                "word='" + word + '\'' +
+                ", hasSynonyms=" + hasSynonyms +
                 '}';
     }
 }
