@@ -9,17 +9,18 @@ import java.util.Set;
 @Table(name="word")
 public class Word {
 
+    //@GeneratedValue( strategy =GenerationType.AUTO )
+    //private int wid;
+    //I am using the word as ID so that no word repeats in the table. Also I had removed the word_id so as to simplify the testing procedure
     @Id
     private String word;
 
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.LAZY, cascade =CascadeType.ALL)
     @JoinTable(
             name = "ws_table",
             joinColumns = @JoinColumn(name = "word"),
             inverseJoinColumns = @JoinColumn(name = "synonym"))
     private Set<Word> hasSynonyms;
-//    @ManyToMany(fetch=FetchType.LAZY, cascade =CascadeType.ALL,mappedBy ="synonyms")
-//    private Set<Word> synonyms;
 
     public Set<Word> getHasSynonyms() {
         return hasSynonyms;
@@ -43,14 +44,6 @@ public class Word {
     public void setWord(String word) {
         this.word = word;
     }
-
-//    public Set<Word> getSynonyms() {
-//        return synonyms;
-//    }
-//
-//    public void setSynonyms(Set<Word> synonyms) {
-//        this.synonyms = synonyms;
-//    }
 
     public Word() {
     }
