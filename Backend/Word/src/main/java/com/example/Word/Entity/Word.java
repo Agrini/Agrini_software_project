@@ -1,6 +1,10 @@
 package com.example.Word.Entity;
 
 
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -9,39 +13,43 @@ import java.util.Set;
 @Table(name="word")
 public class Word {
 
-    //@GeneratedValue( strategy =GenerationType.AUTO )
-    //private int wid;
-    //I am using the word as ID so that no word repeats in the table. Also I had removed the word_id so as to simplify the testing procedure
+    @Column(name = "word_id")
+    //@GeneratorType(type =GenerationType.AUTO, when = GenerationTime.INSERT)
+    //, columnDefinition = "serial")
+    //@Generated(GenerationTime.INSERT)
+    private int wid;
     @Id
     private String word;
 
-    @ManyToMany(fetch=FetchType.LAZY, cascade =CascadeType.ALL)
-    @JoinTable(
-            name = "ws_table",
-            joinColumns = @JoinColumn(name = "word"),
-            inverseJoinColumns = @JoinColumn(name = "synonym"))
-    private Set<Word> hasSynonyms;
 
-    public Set<Word> getHasSynonyms() {
-        return hasSynonyms;
+
+//    @ManyToMany(fetch=FetchType.LAZY, cascade =CascadeType.ALL)
+//    @JoinTable(
+//            name = "ws_table",
+//            joinColumns = @JoinColumn(name = "word"),
+//            inverseJoinColumns = @JoinColumn(name = "synonym"))
+//    private Set<Word> hasSynonyms;
+
+//    public Set<Word> getHasSynonyms() {
+//        return hasSynonyms;
+//    }
+//    public void setHasSynonyms(Set<Word> hasSynonyms) {
+//        this.hasSynonyms = hasSynonyms;
+//    }
+    public int getWid() {
+        return wid;
     }
 
-    public void setHasSynonyms(Set<Word> hasSynonyms) {
-        this.hasSynonyms = hasSynonyms;
+    public void setWid(int wid) {
+        this.wid = wid;
     }
-//    public int getWid() {
-//        return wid;
-//    }
-//
-//    public void setWid(int wid) {
-//        this.wid = wid;
-//    }
 
     public String getWord() {
         return word;
     }
 
-    public void setWord(String word) {
+    public Word(int wid, String word) {
+        this.wid = wid;
         this.word = word;
     }
 
@@ -51,8 +59,8 @@ public class Word {
     @Override
     public String toString() {
         return "Word{" +
-                "word='" + word + '\'' +
-                ", hasSynonyms=" + hasSynonyms +
+                "wid=" + wid +
+                ", word='" + word + '\'' +
                 '}';
     }
 }

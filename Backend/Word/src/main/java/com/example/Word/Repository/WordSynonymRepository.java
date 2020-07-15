@@ -1,10 +1,11 @@
 package com.example.Word.Repository;
 
-import com.example.Word.Entity.Word;
+
+import com.example.Word.Entity.WordSynonymPair;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface WordRepository extends CrudRepository<Word, String> {
+public interface WordSynonymRepository extends CrudRepository<WordSynonymPair, Integer> {
 
 }
