@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <title>PostData</title>
+    <script type="text/javascript">
+    $(document).ready(function(){
+
+        $('#BtnAddData').on('click', function(){
+      
+            var word=$('#word').val();
+            var synonym=[];
+            $("input[name='synonym']").each(function(){
+                synonym.push(this.value);
+            });
+            var obj={
+                "word": word,
+                "hasSynonyms": synonym
+            }
+            console.log(obj);
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/wordsynonym',
+                // contentType: "application/json; charset=utf-8",
+                //data : obj,
+                data : JSON.stringify(obj),
+                success: function(){
+                   alert("New data added !!"); 
+                }
+            })
+        })
+    })
+    </script>
+    
+</head>
+<body>
+    <br>
+    <br>
+    <h2>Enter the word-synonym pair : </h2>
+    <hr>
+    <table id="wordlist">
+        <tr>
+            <td><strong>     Word    </strong></td>
+            <td><strong>   Synonyms  </strong></td>
+        </tr>
+        <tr>
+            <td><input type="text" id="word"></td>
+            <td><input type="text" name="synonym"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="text" name="synonym"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="text" name="synonym"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="text" name="synonym"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="text" name="synonym"></td>
+        </tr>
+        <tr>
+            <td><button id="BtnAddData">Add Data</button></td>
+        </tr>
+    </table>
+</body>
+</html>
